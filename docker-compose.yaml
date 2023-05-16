@@ -1,0 +1,92 @@
+version: '3'
+
+services:
+  dss-ui-app:
+    build: ./src/dss-ui-app
+    container_name: dss-ui
+    volumes:
+      - ./src/dss-ui-app:/app
+    ports:
+      - 5001:5000
+    networks:
+      - dss-net
+
+  tm-app:
+    build: ./src/tm-app
+    container_name: tm-server
+    ports:
+      - 3200:3200
+    networks:
+      - dss-net
+
+  wa-app:
+    build: ./src/wa-app
+    container_name: wa-app
+    ports:
+      - 3201:3201
+    networks:
+      - dss-net
+    volumes:
+       - ./src/wa-app:/code
+
+  te-app:
+    build: ./src/te-app
+    container_name: te-app
+    ports:
+      - 3202:3202
+    networks:
+      - dss-net
+    volumes:
+       - ./src/te-app:/code
+
+  opensky-int:
+    build: ./src/opensky-int
+    container_name: opensky-int
+    ports:
+      - 3203:3203
+    networks:
+      - dss-net
+    volumes:
+       - ./src/opensky-int:/code
+
+  test-app:
+    build: ./src/test-app
+    container_name: test-app
+    ports:
+      - 5150:5150
+    networks:
+      - dss-net    
+
+  jaeger:
+    image: jaegertracing/all-in-one
+    container_name: telem-jaeger
+    ports:
+      - 16686:16686
+      - 6831:6831/udp
+    networks:
+      - dss-net
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - 3000:3000
+    networks:
+      - dss-net
+
+  jupyter:
+    image: jupyter/r-notebook:latest
+    container_name: notebook
+    ports:
+      - 10000:8888
+    networks:
+      - dss-net
+    volumes:
+       - ./analysis:/home/jovyan/work
+    environment:
+      JUPYTER_ENABLE_LAB: "yes"
+    # command: "start-notebook.sh --NotebookApp.token='' --NotebookApp.password=''"
+    command: "start-notebook.sh"
+ 
+networks:
+  dss-net:
