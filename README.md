@@ -5,7 +5,7 @@ Repository for experimenting with container technologies
 
 1. Install and initialize Docker
 
-2. Clone the repository from GitHub into a project directory; e.g. dss-prototype
+2. Clone the repository from GitHub into a project-directory; e.g. c2-container-study
 
 #### Fresh Install
 
@@ -40,6 +40,6 @@ notebook:       http://localhost:10000
 
 ## Stop all containers
 
-    docker stop $(docker ps -a -q)
+        docker stop $(docker ps -a -q)
 
 
