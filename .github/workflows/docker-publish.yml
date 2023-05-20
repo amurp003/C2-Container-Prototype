@@ -20,11 +20,10 @@ env:
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-
     steps:
+    - name: Check out the repo
+      uses: actions/checkout@v3
+
     - name: publish
       uses: pennsignals/publish_docker-compose@v0.1.0
       with:
